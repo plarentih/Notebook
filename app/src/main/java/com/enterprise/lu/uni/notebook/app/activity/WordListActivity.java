@@ -26,7 +26,7 @@ public class WordListActivity extends AppCompatActivity {
     private ListView wordListView;
     private NewWordAdapter wordAdapter;
     private List<NewWord> wordList;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
