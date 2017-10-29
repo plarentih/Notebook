@@ -1,24 +1,34 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import android.os.Environment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
+import android.database.sqlite.SQLiteDatabase;
 import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
 import com.enterprise.lu.uni.notebook.R;
-
+import android.widget.Toast;
+import android.view.View;
+import android.view.View.OnClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartingActivity extends AppCompatActivity {
-
+    private static final String SAMPLE_DB_NAME = "Notebook";
+    private static final String SAMPLE_TABLE_NAME = "NewWord";
     Button newWordBtn;
     Button notebookBtn;
     Button domainsBtn;
     Button examModeBtn;
+    Button exportBtn;
     private ArrayList<Domain> dms;
 
     @Override
@@ -45,6 +55,12 @@ public class StartingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NotebookActivity.class);
                 startActivity(intent);
+            }
+        });
+        exportBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exportDB();
             }
         });
     }
@@ -87,5 +103,27 @@ public class StartingActivity extends AppCompatActivity {
         notebookBtn = (Button) findViewById(R.id.buttonNotebook);
         domainsBtn = (Button) findViewById(R.id.buttonDomains);
         examModeBtn = (Button) findViewById(R.id.buttonExam);
+        exportBtn= (Button) findViewById(R.id.buttonExport);
+    }
+
+    private void exportDB(){
+        File sd = Environment.getExternalStorageDirectory();
+        File data = Environment.getDataDirectory();
+        FileChannel source=null;
+        FileChannel destination=null;
+        String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME;
+        String backupDBPath = SAMPLE_DB_NAME;
+        File currentDB = new File(data, currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+        try {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
