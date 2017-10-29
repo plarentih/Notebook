@@ -68,9 +68,9 @@ public class AddWordActivity extends AppCompatActivity {
         });
     }
 
-    private void saveWord(String wordi, String translation, Domain domain){
+    private void saveWord(String word, String translation, Domain domain){
         NewWord newWord = new NewWord();
-        newWord.word = wordi;
+        newWord.word = word;
         newWord.translation = translation;
         newWord.domain = domain;
         newWord.save();
