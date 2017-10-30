@@ -3,6 +3,7 @@ package com.enterprise.lu.uni.notebook.app.activity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -62,10 +63,10 @@ public class StartingActivity extends AppCompatActivity {
             }
         });
         exportBtn.setOnClickListener(new OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), CSV.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                exportDB();
             }
         });
     }
@@ -133,7 +134,7 @@ public class StartingActivity extends AppCompatActivity {
     }*/
     private void exportDB() {
 
-        File dbFile=getDatabasePath("Notebook.db");
+       /* File dbFile=getDatabasePath("Notebook.db");
         DBHelper dbhelper = new DBHelper(getApplicationContext());
         File exportDir = new File(Environment.getExternalStorageDirectory(), "");
         if (!exportDir.exists())
@@ -141,7 +142,7 @@ public class StartingActivity extends AppCompatActivity {
             exportDir.mkdirs();
         }
 
-        File file = new File("test.csv");
+        File file = new File(exportDir, "csvname.csv");
         try
         {
             file.createNewFile();
@@ -161,5 +162,6 @@ public class StartingActivity extends AppCompatActivity {
         catch(Exception sqlEx)
         {
             Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
-        }
+        }*/
+
 }}
