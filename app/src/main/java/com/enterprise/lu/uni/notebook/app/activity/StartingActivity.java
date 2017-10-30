@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.opencsv.*;
 public class StartingActivity extends AppCompatActivity {
     private static final String SAMPLE_DB_NAME = "Notebook.db";
     private static final String SAMPLE_TABLE_NAME = "NewWord";
@@ -132,6 +132,7 @@ public class StartingActivity extends AppCompatActivity {
         }
     }*/
     private void exportDB() {
+
 
         File dbFile=getDatabasePath("Notebook.db");
         DBHelper dbhelper = new DBHelper(getApplicationContext());
