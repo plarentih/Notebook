@@ -36,4 +36,7 @@ public class Domain extends Model implements Serializable {
     public void setDomainName(String domainName) {
         this.domainName = domainName;
     }
+    public String toString() {
+        return "Domain name: " + getDomainName();
+    }
 }
