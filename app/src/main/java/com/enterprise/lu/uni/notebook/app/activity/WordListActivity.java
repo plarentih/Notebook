@@ -1,10 +1,16 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +49,31 @@ public class WordListActivity extends AppCompatActivity {
 
         wordAdapter = new NewWordAdapter(getBaseContext(), wordList);
         wordListView.setAdapter(wordAdapter);
+
+        wordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewWord clickedItem = wordAdapter.getItem(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(WordListActivity.this);
+                builder.setTitle("Important!");
+                builder.setMessage("Do you want to edit or delete this word?");
+                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+            }
+        });
     }
 
     private void initializeWidgets(){
