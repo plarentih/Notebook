@@ -3,6 +3,7 @@ package com.enterprise.lu.uni.notebook.app.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,8 @@ public class WordListActivity extends AppCompatActivity {
             wordList = getWordsFromNotebook();
         }
 
+        BottomSheetDialog ds = new BottomSheetDialog(getBaseContext());
+
         wordAdapter = new NewWordAdapter(getBaseContext(), wordList);
         wordListView.setAdapter(wordAdapter);
 
@@ -54,24 +57,6 @@ public class WordListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewWord clickedItem = wordAdapter.getItem(position);
-                AlertDialog.Builder builder = new AlertDialog.Builder(WordListActivity.this);
-                builder.setTitle("Important!");
-                builder.setMessage("Do you want to edit or delete this word?");
-                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                    }
-                });
-                builder.setCancelable(false);
-                builder.show();
             }
         });
     }
