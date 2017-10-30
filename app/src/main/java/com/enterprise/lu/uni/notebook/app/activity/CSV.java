@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
+import com.enterprise.lu.uni.notebook.app.model.NewWord;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -32,7 +33,7 @@ public class CSV extends AppCompatActivity {
         readWordList();
         
     }
-    private List<WordSample> list= new ArrayList<>();
+    private List<NewWord> list= new ArrayList<>();
     private void readWordList() {
             InputStream is= getResources().openRawResource(R.raw.list);
         BufferedReader reader= new BufferedReader(
@@ -46,10 +47,10 @@ public class CSV extends AppCompatActivity {
                 //Split by ','
                 String[] tokens= line.split(",");
                 //Read the data
-                WordSample sample= new WordSample();
+                NewWord sample= new NewWord();
                 sample.setWord(tokens[0]);
-                sample.setTranslatedWord(tokens[1]);
-                //sample.setDomain(Domain.toString
+                sample.setTranslation(tokens[1]);
+                //sample.setDomain(Domain.toString());
                 list.add(sample);
 
                 Log.d("MyActivity", "Just created" + sample);

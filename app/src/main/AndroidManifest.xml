@@ -14,7 +14,13 @@
         <activity
             android:name=".app.activity.NotebookActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".app.activity.CSV"
+            android:label="CSV"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".app.activity.AddWordActivity"></activity>
         <activity android:name=".app.activity.StartingActivity">
             <intent-filter>
