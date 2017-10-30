@@ -3,8 +3,11 @@ package com.enterprise.lu.uni.notebook.app.activity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+
+import android.database.Cursor;
 import android.os.Environment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.database.sqlite.SQLiteDatabase;
 import com.activeandroid.query.Select;
+import com.activeandroid.util.Log;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
 import com.enterprise.lu.uni.notebook.R;
 import android.widget.Toast;
@@ -22,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StartingActivity extends AppCompatActivity {
-    private static final String SAMPLE_DB_NAME = "Notebook";
+    private static final String SAMPLE_DB_NAME = "Notebook.db";
     private static final String SAMPLE_TABLE_NAME = "NewWord";
     Button newWordBtn;
     Button notebookBtn;
@@ -59,8 +63,9 @@ public class StartingActivity extends AppCompatActivity {
         });
         exportBtn.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                exportDB();
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), CSV.class);
+                startActivity(intent);
             }
         });
     }
@@ -106,12 +111,12 @@ public class StartingActivity extends AppCompatActivity {
         exportBtn= (Button) findViewById(R.id.buttonExport);
     }
 
-    private void exportDB(){
+   /*private void exportDB(){
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
         FileChannel source=null;
         FileChannel destination=null;
-        String currentDBPath = "/data/"+ "com.authorwjf.sqliteexport" +"/databases/"+SAMPLE_DB_NAME;
+        String currentDBPath = "/data/"+ "com.enterprise.lu.uni.notebook" +"/databases/"+SAMPLE_DB_NAME;
         String backupDBPath = SAMPLE_DB_NAME;
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
@@ -125,5 +130,36 @@ public class StartingActivity extends AppCompatActivity {
         } catch(IOException e) {
             e.printStackTrace();
         }
-    }
-}
+    }*/
+    private void exportDB() {
+
+        File dbFile=getDatabasePath("Notebook.db");
+        DBHelper dbhelper = new DBHelper(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File("test.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM NewWord",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+}}
