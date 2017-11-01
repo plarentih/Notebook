@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.tools.PermissionHelper;
@@ -25,9 +26,15 @@ public class ExportImportActivity extends AppCompatActivity {
         Button exportButton = (Button) findViewById(R.id.buttonExport);
         Button importButton = (Button) findViewById(R.id.buttonImport);
 
+
         exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String DB_PATH = "/data/data/com.enterprise.lu.uni.notebook/databases/";
+
+                 String DB_NAME = "Notebook.db";
+                SQLiteDatabase myDataBase;
+                String myPath = DB_PATH + DB_NAME;
                 if(PermissionHelper.checkForPermissions(ExportImportActivity.this)){
                     File exportDir = new File(Environment.getExternalStorageDirectory(), "");
                     if (!exportDir.exists())
@@ -40,14 +47,16 @@ public class ExportImportActivity extends AppCompatActivity {
                     {
                         DBHelper mHelper= new DBHelper(getApplicationContext());
                         file.createNewFile();
+                        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+                        mHelper.openDataBase();
                         CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-                        SQLiteDatabase db = mHelper.getReadableDatabase();
-                        Cursor curCSV = db.rawQuery("SELECT * FROM NewWord",null);
+
+                        Cursor curCSV = myDataBase.rawQuery("SELECT Word, translatedWord, Domain FROM NewWord",null);
                         csvWrite.writeNext(curCSV.getColumnNames());
                         while(curCSV.moveToNext())
                         {
                             //Which column you want to export
-                            String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
+                            String arrStr[] ={curCSV.getString(0), curCSV.getString(1),curCSV.getString(2)};
                             csvWrite.writeNext(arrStr);
                         }
                         csvWrite.close();
@@ -57,6 +66,7 @@ public class ExportImportActivity extends AppCompatActivity {
                     {
                         Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
                     }
+                    Toast.makeText(getBaseContext(),"Your list has been exported",Toast.LENGTH_SHORT).show();
                 }else {
                     PermissionHelper.askForPermissions(ExportImportActivity.this);
                 }
