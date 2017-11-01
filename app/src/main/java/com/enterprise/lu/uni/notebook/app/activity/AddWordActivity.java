@@ -60,10 +60,8 @@ public class AddWordActivity extends AppCompatActivity {
                 Domain domain = getDomainFromName(domainName);
                 firstLetter = String.valueOf(wordi.charAt(0)).toUpperCase();
                 saveWord(wordi,translation, domain);
-
-                Intent intent = new Intent(getBaseContext(), WordListActivity.class);
-                intent.putExtra(NEW_WORD_LETTER, firstLetter);
-                startActivity(intent);
+                setResult(RESULT_OK);
+                finish();
             }
         });
     }
