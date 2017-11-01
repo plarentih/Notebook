@@ -30,6 +30,7 @@ import com.opencsv.*;
 public class StartingActivity extends AppCompatActivity {
     private static final String SAMPLE_DB_NAME = "Notebook.db";
     private static final String SAMPLE_TABLE_NAME = "NewWord";
+    int a = 0;
 
     public static final int REQUEST_CODE_STARTING = 40;
 
