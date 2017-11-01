@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.enterprise.lu.uni.notebook.app.activity.ExportImportActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <Button
+        android:id="@+id/buttonExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Export"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="120dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonImport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Import"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="69dp"
+        app:layout_constraintTop_toBottomOf="@+id/buttonExport"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/buttonExport"
+        android:layout_marginLeft="-192dp" />
+</android.support.constraint.ConstraintLayout>
