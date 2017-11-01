@@ -1,8 +1,10 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,7 +80,8 @@ public class ExportImportActivity extends AppCompatActivity {
         importButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS);
+                startActivityForResult(intent, 200);
             }
         });
     }
