@@ -16,11 +16,11 @@
         <activity
             android:name=".app.activity.NotebookActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".app.activity.CSV"
             android:label="CSV"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".app.activity.AddWordActivity" />
         <activity android:name=".app.activity.StartingActivity">
             <intent-filter>
@@ -41,7 +41,7 @@
             android:name="AA_DB_VERSION"
             android:value="3" />
 
-        <activity android:name=".app.activity.ExportImportActivity"></activity>
+        <activity android:name=".app.activity.ExportImportActivity" />
     </application>
 
 </manifest>
