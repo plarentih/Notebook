@@ -134,7 +134,39 @@ public class StartingActivity extends AppCompatActivity {
     }*/
     private void exportDB() {
 
-<<<<<<< HEAD
+        File dbFile=getDatabasePath("Notebook.db");
+        DBHelper dbhelper = new DBHelper(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "csvname.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM NewWord",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
+
+
        /* File dbFile=getDatabasePath("Notebook.db");
 =======
 
