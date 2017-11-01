@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.enterprise.lu.uni.notebook.app.activity;
 
 import java.io.File;
@@ -126,3 +127,5 @@ public class StartingActivity extends AppCompatActivity {
         }
     }
 }
+=======
+>>>>>>> 740b0a58f72b8b322047a8637ddceb951597ac40
