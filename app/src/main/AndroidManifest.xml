@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.enterprise.lu.uni.notebook">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
 
         android:allowBackup="true"
@@ -30,8 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.activity.WordListActivity"></activity>
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
         <meta-data
             android:name="AA_MODELS"
             android:value="com.enterprise.lu.uni.notebook.app.model.NewWord, com.enterprise.lu.uni.notebook.app.model.Domain" />
