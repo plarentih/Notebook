@@ -26,9 +26,13 @@ import android.view.View.OnClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import com.opencsv.*;
+
 public class StartingActivity extends AppCompatActivity {
     private static final String SAMPLE_DB_NAME = "Notebook.db";
     private static final String SAMPLE_TABLE_NAME = "NewWord";
+
+    public static final int REQUEST_CODE_STARTING = 40;
+
     Button newWordBtn;
     Button notebookBtn;
     Button domainsBtn;
@@ -52,7 +56,7 @@ public class StartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), AddWordActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_STARTING);
             }
         });
         notebookBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +116,13 @@ public class StartingActivity extends AppCompatActivity {
         exportBtn= (Button) findViewById(R.id.buttonExport);
     }
 
+<<<<<<< HEAD
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_CODE_STARTING){
+
+=======
    /*private void exportDB(){
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
@@ -134,6 +145,46 @@ public class StartingActivity extends AppCompatActivity {
     }*/
     private void exportDB() {
 
+<<<<<<< HEAD
+=======
+        File dbFile=getDatabasePath("Notebook.db");
+        DBHelper dbhelper = new DBHelper(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "csvname.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM NewWord",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
+                csvWrite.writeNext(arrStr);
+>>>>>>> 37c028dbd4ceca3ae6719e925feddcd2ca6ba2de
+            }
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+<<<<<<< HEAD
+    }
+}
+=======
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
+
+
+>>>>>>> efc7e6e6e30d778d6f36d24e5adfab3242e5a726
 
        /* File dbFile=getDatabasePath("Notebook.db");
 =======
@@ -170,3 +221,4 @@ public class StartingActivity extends AppCompatActivity {
         }*/
 
 }}
+>>>>>>> 37c028dbd4ceca3ae6719e925feddcd2ca6ba2de
