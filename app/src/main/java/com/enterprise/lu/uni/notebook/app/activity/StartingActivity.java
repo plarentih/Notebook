@@ -25,9 +25,13 @@ import android.view.View.OnClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import com.opencsv.*;
+
 public class StartingActivity extends AppCompatActivity {
     private static final String SAMPLE_DB_NAME = "Notebook.db";
     private static final String SAMPLE_TABLE_NAME = "NewWord";
+
+    public static final int REQUEST_CODE_STARTING = 40;
+
     Button newWordBtn;
     Button notebookBtn;
     Button domainsBtn;
@@ -51,7 +55,7 @@ public class StartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), AddWordActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_STARTING);
             }
         });
         notebookBtn.setOnClickListener(new View.OnClickListener() {
@@ -111,56 +115,14 @@ public class StartingActivity extends AppCompatActivity {
         exportBtn= (Button) findViewById(R.id.buttonExport);
     }
 
-   /*private void exportDB(){
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-        FileChannel source=null;
-        FileChannel destination=null;
-        String currentDBPath = "/data/"+ "com.enterprise.lu.uni.notebook" +"/databases/"+SAMPLE_DB_NAME;
-        String backupDBPath = SAMPLE_DB_NAME;
-        File currentDB = new File(data, currentDBPath);
-        File backupDB = new File(sd, backupDBPath);
-        try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-            Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-    private void exportDB() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_CODE_STARTING){
 
-
-        File dbFile=getDatabasePath("Notebook.db");
-        DBHelper dbhelper = new DBHelper(getApplicationContext());
-        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
-        if (!exportDir.exists())
-        {
-            exportDir.mkdirs();
-        }
-
-        File file = new File("test.csv");
-        try
-        {
-            file.createNewFile();
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            SQLiteDatabase db = dbhelper.getReadableDatabase();
-            Cursor curCSV = db.rawQuery("SELECT * FROM NewWord",null);
-            csvWrite.writeNext(curCSV.getColumnNames());
-            while(curCSV.moveToNext())
-            {
-                //Which column you want to exprort
-                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
-                csvWrite.writeNext(arrStr);
             }
-            csvWrite.close();
-            curCSV.close();
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
-        catch(Exception sqlEx)
-        {
-            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
-        }
-}}
+    }
+}
