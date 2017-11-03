@@ -1,8 +1,11 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
 import android.content.Intent;
+import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,6 +16,8 @@ import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
 import com.enterprise.lu.uni.notebook.app.model.NewWord;
 import com.enterprise.lu.uni.notebook.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +32,15 @@ public class AddWordActivity extends AppCompatActivity {
     private ArrayList<String> domainNames;
 
     public static final String NEW_WORD_LETTER = "letter";
-    private String letterFromWordList;
+
+    private NewWord wordToEdit;
+    private long wordToEditId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word);
         InitializeWidgets();
-        letterToStartWith();
 
         setTitle("Add a new word");
 
@@ -50,18 +56,38 @@ public class AddWordActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, domainNames);
         domainSpinner.setAdapter(adapter);
 
+        wordToEdit = (NewWord) getIntent().getSerializableExtra("EDIT_WORD");
+        wordToEditId = getIntent().getLongExtra("EDIT_WORD_ID", -1);
+        int spinnerIndex = (int) getIntent().getLongExtra("SPINNER_ID", -1);
+        if(wordToEdit != null){
+            entryNewWord.setText(wordToEdit.getWord());
+            entryTranslate.setText(wordToEdit.getTranslation());
+            domainSpinner.setSelection(spinnerIndex - 1);
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstLetter;
-                String wordi = entryNewWord.getText().toString();
-                String translation = entryTranslate.getText().toString();
-                String domainName = domainSpinner.getSelectedItem().toString();
-                Domain domain = getDomainFromName(domainName);
-                firstLetter = String.valueOf(wordi.charAt(0)).toUpperCase();
-                saveWord(wordi,translation, domain);
-                setResult(RESULT_OK);
-                finish();
+                Editable editWord = entryNewWord.getText();
+                if(wordToEdit != null){
+                    NewWord newWord = NewWord.load(NewWord.class, wordToEditId);
+                    newWord.word = editWord.toString();
+                    newWord.translation = entryTranslate.getText().toString();
+                    String domainName = domainSpinner.getSelectedItem().toString();
+                    newWord.domain = getDomainFromName(domainName);
+                    newWord.save();
+                    setResult(RESULT_OK);
+                    finish();
+                }
+                if(wordToEdit == null){
+                    String word = entryNewWord.getText().toString();
+                    String translation = entryTranslate.getText().toString();
+                    String domainName = domainSpinner.getSelectedItem().toString();
+                    Domain domain = getDomainFromName(domainName);
+                    saveWord(word,translation, domain);
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
     }
@@ -93,10 +119,5 @@ public class AddWordActivity extends AppCompatActivity {
         entryTranslate = (EditText) findViewById(R.id.editTextTranslate);
         domainSpinner = (Spinner) findViewById(R.id.spinner);
         button = (Button) findViewById(R.id.button);
-    }
-
-    private void letterToStartWith(){
-        Intent intent = getIntent();
-        letterFromWordList = intent.getStringExtra("LETTER");
     }
 }

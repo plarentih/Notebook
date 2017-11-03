@@ -67,7 +67,12 @@ public class WordListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         NewWord selectedWord = wordAdapter.getItem(internalPosition);
-
+                        long spinnerId = selectedWord.getDomain().getId();
+                        Intent intent = new Intent(getBaseContext(), AddWordActivity.class);
+                        intent.putExtra("EDIT_WORD", selectedWord);
+                        intent.putExtra("EDIT_WORD_ID", selectedWord.getId());
+                        intent.putExtra("SPINNER_ID", spinnerId);
+                        startActivityForResult(intent, REQUEST_CODE_WORD_LIST);
                     }
                 });
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -75,24 +80,17 @@ public class WordListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         NewWord selectedWord = wordAdapter.getItem(internalPosition);
                         selectedWord.delete();
-                        getWordsFromNotebook();
-                        wordAdapter.notifyDataSetChanged();
+                        wordList = getWordsFromNotebook();
+                        wordAdapter = new NewWordAdapter(getBaseContext(), wordList);
+                        wordListView.setAdapter(wordAdapter);
                         Toast.makeText(getBaseContext(), "Word is deleted!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setCancelable(true);
                 builder.show();
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-
-                    }
-                });
             }
         });
     }
-
-
 
     private void initializeWidgets(){
         title = (TextView) findViewById(R.id.textViewTitle);
@@ -161,6 +159,7 @@ public class WordListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_CODE_WORD_LIST){
+                wordList.clear();
                 wordList = getWordsFromNotebook();
                 wordAdapter = new NewWordAdapter(getBaseContext(), wordList);
                 wordListView.setAdapter(wordAdapter);

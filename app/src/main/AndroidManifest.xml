@@ -43,6 +43,11 @@
             android:value="3" />
 
         <activity android:name=".app.activity.ExportImportActivity" />
+        <activity android:name=".app.activity.DomainActivity"
+                  android:label="Domains"/>
+        <activity android:name=".app.activity.AddDomainActivity"
+                  android:label="Create/Edit Domain">
+        </activity>
     </application>
 
 </manifest>

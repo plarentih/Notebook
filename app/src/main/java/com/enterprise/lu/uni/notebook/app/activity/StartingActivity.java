@@ -52,6 +52,13 @@ public class StartingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        domainsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), DomainActivity.class);
+                startActivity(intent);
+            }
+        });
         exportBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
