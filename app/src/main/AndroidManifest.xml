@@ -34,8 +34,7 @@
 
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.enterprise.lu.uni.notebook.app.model.NewWord, com.enterprise.lu.uni.notebook.app.model.Domain,
-                           com.enterprise.lu.uni.notebook.app.model.Question" />
+            android:value="com.enterprise.lu.uni.notebook.app.model.NewWord, com.enterprise.lu.uni.notebook.app.model.Domain,                            com.enterprise.lu.uni.notebook.app.model.Question" />
         <meta-data
             android:name="AA_DB_NAME"
             android:value="Notebook.db" />
@@ -49,8 +48,9 @@
             android:label="Domains" />
         <activity
             android:name=".app.activity.AddDomainActivity"
-            android:label="Create/Edit Domain"></activity>
-        <activity android:name=".app.activity.ExamActivity"></activity>
+            android:label="Create/Edit Domain" />
+        <activity android:name=".app.activity.ExamActivity" />
+        <activity android:name=".app.activity.ResultActivity"></activity>
     </application>
 
 </manifest>

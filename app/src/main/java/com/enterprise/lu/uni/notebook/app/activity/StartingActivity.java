@@ -9,6 +9,8 @@ import android.widget.Button;
 import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
+import com.enterprise.lu.uni.notebook.app.model.NewWord;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +64,13 @@ public class StartingActivity extends AppCompatActivity {
         examModeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ExamActivity.class);
-                startActivity(intent);
+                if(getAllWords().size() < 10){
+                    UIHelper.showDialog(StartingActivity.this, "Attention!", "You can not take an exam if there are " +
+                                    "less then 10 words in the notebook.", "OK", null);
+                }else {
+                    Intent intent = new Intent(getBaseContext(), ExamActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         exportBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +87,13 @@ public class StartingActivity extends AppCompatActivity {
         return new Select()
                 .all()
                 .from(Domain.class)
+                .execute();
+    }
+
+    public static List<NewWord> getAllWords(){
+        return new Select()
+                .all()
+                .from(NewWord.class)
                 .execute();
     }
 

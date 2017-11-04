@@ -1,5 +1,6 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +46,10 @@ public class ExamActivity extends AppCompatActivity {
                     currentQuestion = questionList.get(questionId);
                     setQuestionView();
                 }else {
-                    Toast.makeText(getBaseContext(), "Result activity open!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getBaseContext(), ResultActivity.class);
+                    intent.putExtra("SCORE", score);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

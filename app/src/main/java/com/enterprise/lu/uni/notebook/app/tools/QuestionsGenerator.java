@@ -58,7 +58,7 @@ public class QuestionsGenerator {
                 }
                 question.optionA = wordj.getTranslation();
             }
-            else if(question.optionB == null){
+            if(question.optionB == null){
                 int randomWordj = random.nextInt(getAllWordList().size());
                 NewWord wordj = getAllWordList().get(randomWordj);
                 if(wordj == word){
@@ -68,7 +68,7 @@ public class QuestionsGenerator {
                 }
                 question.optionB = wordj.getTranslation();
             }
-            else if(question.optionC == null){
+            if(question.optionC == null){
                 int randomWordj = random.nextInt(getAllWordList().size());
                 NewWord wordj = getAllWordList().get(randomWordj);
                 if(wordj == word){
@@ -78,7 +78,7 @@ public class QuestionsGenerator {
                 }
                 question.optionC = wordj.getTranslation();
             }
-            else if(question.optionD == null){
+            if(question.optionD == null){
                 int randomWordj = random.nextInt(getAllWordList().size());
                 NewWord wordj = getAllWordList().get(randomWordj);
                 if(wordj == word){
