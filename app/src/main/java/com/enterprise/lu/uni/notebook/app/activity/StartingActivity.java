@@ -59,6 +59,13 @@ public class StartingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        examModeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ExamActivity.class);
+                startActivity(intent);
+            }
+        });
         exportBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
