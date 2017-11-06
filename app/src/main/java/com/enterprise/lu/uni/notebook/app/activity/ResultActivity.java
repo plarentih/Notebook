@@ -25,6 +25,7 @@ public class ResultActivity extends AppCompatActivity {
         ratingBar.setStepSize(0.5f);
         score = getIntent().getIntExtra("SCORE", -1);
         ratingBar.setRating(score);
+        ratingBar.setIsIndicator(true);
 
         switch(score){
             case 0:

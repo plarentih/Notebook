@@ -1,6 +1,8 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,17 +16,22 @@ import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.model.Question;
 import com.enterprise.lu.uni.notebook.app.tools.QuestionsGenerator;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class ExamActivity extends AppCompatActivity {
 
-    private TextView questionTextView;
+    private TextView questionTextView, numberTextView, textAnswer;
     private RadioButton radioButtonA, radioButtonB, radioButtonC, radioButtonD;
-    private Button nextQuestionButton;
+    private Button nextQuestionButton, checkAnswerButton;
     private List<Question> questionList;
     private Question currentQuestion;
     private int questionId = 0;
     private int score = 0;
+    private int questionNo = 1;
+    RadioGroup radioGroup;
+    RadioButton radioAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +41,23 @@ public class ExamActivity extends AppCompatActivity {
         questionList = QuestionsGenerator.getAllQuestions();
         currentQuestion = questionList.get(questionId);
         setQuestionView();
+        textAnswer.setVisibility(View.GONE);
         nextQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-                RadioButton radioAnswer = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+                textAnswer.setVisibility(View.GONE);
+                radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+                radioAnswer = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
                 if(currentQuestion.getAnswer().equals(radioAnswer.getText())){
                     score++;
+                    textAnswer.setText("Correct!");
+                    textAnswer.setTextColor(Color.GREEN);
+                }else {
+                    textAnswer.setText("Wrong!");
+                    textAnswer.setTextColor(Color.RED);
+                }
+                if(questionNo == 5){
+                    nextQuestionButton.setText("Finish Exam");
                 }
                 if(questionId < 5){
                     currentQuestion = questionList.get(questionId);
@@ -53,23 +70,45 @@ public class ExamActivity extends AppCompatActivity {
                 }
             }
         });
+
+        checkAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+                radioAnswer = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+                if(currentQuestion.getAnswer().equals(radioAnswer.getText())){
+                    textAnswer.setVisibility(View.VISIBLE);
+                    textAnswer.setText("Correct!");
+                    textAnswer.setTextColor(Color.GREEN);
+                }else {
+                    textAnswer.setVisibility(View.VISIBLE);
+                    textAnswer.setText("Wrong!");
+                    textAnswer.setTextColor(Color.RED);
+                }
+            }
+        });
     }
 
     private void InitializeWidgets(){
         questionTextView = (TextView) findViewById(R.id.questionTextView);
+        numberTextView = (TextView) findViewById(R.id.numberTextView);
+        textAnswer = (TextView) findViewById(R.id.checkedAnswer);
         radioButtonA = (RadioButton) findViewById(R.id.radioA);
         radioButtonB = (RadioButton) findViewById(R.id.radioB);
         radioButtonC = (RadioButton) findViewById(R.id.radioC);
         radioButtonD = (RadioButton) findViewById(R.id.radioD);
         nextQuestionButton = (Button) findViewById(R.id.nextButton);
+        checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
     }
 
     private void setQuestionView(){
         questionTextView.setText(currentQuestion.getQuestion());
+        numberTextView.setText(questionNo+".");
         radioButtonA.setText(currentQuestion.getOptionA());
         radioButtonB.setText(currentQuestion.getOptionB());
         radioButtonC.setText(currentQuestion.getOptionC());
         radioButtonD.setText(currentQuestion.getOptionD());
         questionId++;
+        questionNo++;
     }
 }
