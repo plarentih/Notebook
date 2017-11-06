@@ -1,14 +1,10 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,28 +12,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.R;
+import com.enterprise.lu.uni.notebook.app.model.Domain;
 import com.enterprise.lu.uni.notebook.app.model.NewWord;
+import com.enterprise.lu.uni.notebook.app.tools.CSVWriter;
+import com.enterprise.lu.uni.notebook.app.tools.DBHelper;
 import com.enterprise.lu.uni.notebook.app.tools.PermissionHelper;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExportImportActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +93,11 @@ public class ExportImportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 if (PermissionHelper.checkForPermissions(ExportImportActivity.this)) {
-                    Intent intent = new Intent(getBaseContext(), CSV.class);
-                    startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("text/*");
+                    startActivityForResult(Intent.createChooser(intent, "Select file"), 40);
                 }
                else{
                     PermissionHelper.askForPermissions(ExportImportActivity.this);
@@ -114,10 +108,83 @@ public class ExportImportActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 200){
-
-
+        if(requestCode == 40){
+            if(resultCode == RESULT_OK){
+                readFile(data);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void readFile(Intent data){
+        Uri uri = data.getData();
+        BufferedReader reader = null;
+        String line;
+        try{
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = reader.readLine()) != null){
+                String[] columns = line.split(",");
+                NewWord newWord = new NewWord();
+                String word = columns[0];
+                String translation = columns[1];
+                String domain = columns[2];
+
+                word.replaceAll("^\\s+|\\s+$", "");
+                translation.replaceAll("^\\s+|\\s+$", "");
+                domain.replaceAll("^\\s+|\\s+$", "");
+                domain.replace("\t", "");
+                domain.trim();
+
+                newWord.word = word;
+                newWord.translation = translation;
+
+                if(domain == null){
+
+                }else {
+                    if(getDomainFromName(domain) == null){
+                        Domain newDomain = new Domain();
+                        newDomain.domainName = domain;
+                        newDomain.save();
+                        newWord.domain = newDomain;
+                    }else {
+                        newWord.domain = getDomainFromName(domain);
+                    }
+                }
+                newWord.save();
+            }
+            reader.close();
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+
+    private void readCSVFile(File file) throws FileNotFoundException {
+        CSVReader csvReader = new CSVReader(new FileReader(file));
+        String[] nextLine;
+        try {
+            while ((nextLine = csvReader.readNext()) != null) {
+                NewWord newWord = new NewWord();
+                newWord.word = nextLine[0];
+                newWord.translation = nextLine[1];
+                String domain = nextLine[2];
+                if(getDomainFromName(domain) == null){
+                    Domain newDomain = new Domain();
+                    newDomain.domainName = domain;
+                    newDomain.save();
+                }
+                newWord.save();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Domain getDomainFromName(String domainName) {
+        return new Select()
+                .from(Domain.class)
+                .where("Name = ?", domainName)
+                .executeSingle();
+    }
+
 }

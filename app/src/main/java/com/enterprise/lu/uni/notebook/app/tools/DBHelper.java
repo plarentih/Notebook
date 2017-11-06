@@ -1,4 +1,4 @@
-package com.enterprise.lu.uni.notebook.app.activity;
+package com.enterprise.lu.uni.notebook.app.tools;
 
 import android.content.Context;
 import android.database.SQLException;

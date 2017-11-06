@@ -1,4 +1,4 @@
-package com.enterprise.lu.uni.notebook.app.activity;
+package com.enterprise.lu.uni.notebook.app.tools;
 
 /**
  * Created by Ema Kepuska on 10/29/2017.

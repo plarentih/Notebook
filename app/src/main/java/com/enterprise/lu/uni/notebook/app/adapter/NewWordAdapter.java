@@ -14,6 +14,7 @@ import com.enterprise.lu.uni.notebook.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Plarent on 10/21/2017.
@@ -50,7 +51,11 @@ public class NewWordAdapter extends ArrayAdapter<NewWord> {
         }
         viewHolder.newWord.setText(newWord.getWord());
         viewHolder.translatedWord.setText(newWord.getTranslation());
-        viewHolder.domainSpinner.setText(newWord.getDomain().getDomainName());
+        if((newWord.getDomain()) == null){
+
+        }else {
+            viewHolder.domainSpinner.setText(newWord.getDomain().getDomainName());
+        }
         return convertView;
     }
 }
