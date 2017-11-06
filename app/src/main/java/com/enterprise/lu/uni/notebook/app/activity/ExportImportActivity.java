@@ -1,8 +1,12 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +17,27 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.enterprise.lu.uni.notebook.R;
+import com.enterprise.lu.uni.notebook.app.model.NewWord;
 import com.enterprise.lu.uni.notebook.app.tools.PermissionHelper;
+import com.opencsv.CSVReader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExportImportActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +53,7 @@ public class ExportImportActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String DB_PATH = "/data/data/com.enterprise.lu.uni.notebook/databases/";
 
-                 String DB_NAME = "Notebook.db";
+                String DB_NAME = "Notebook.db";
                 SQLiteDatabase myDataBase;
                 String myPath = DB_PATH + DB_NAME;
                 if(PermissionHelper.checkForPermissions(ExportImportActivity.this)){
@@ -53,7 +72,7 @@ public class ExportImportActivity extends AppCompatActivity {
                         mHelper.openDataBase();
                         CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 
-                        Cursor curCSV = myDataBase.rawQuery("SELECT Word, translatedWord, Domain FROM NewWord",null);
+                        Cursor curCSV = myDataBase.rawQuery("SELECT Word, translatedWord, Domainthi FROM NewWord",null);
                         csvWrite.writeNext(curCSV.getColumnNames());
                         while(curCSV.moveToNext())
                         {
@@ -80,9 +99,25 @@ public class ExportImportActivity extends AppCompatActivity {
         importButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS);
-                startActivityForResult(intent, 200);
+
+
+                if (PermissionHelper.checkForPermissions(ExportImportActivity.this)) {
+                    Intent intent = new Intent(getBaseContext(), CSV.class);
+                    startActivity(intent);
+                }
+               else{
+                    PermissionHelper.askForPermissions(ExportImportActivity.this);
+                }
+
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 200){
+
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
