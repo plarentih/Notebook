@@ -17,16 +17,20 @@
         <activity
             android:name=".app.activity.NotebookActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".app.activity.AddWordActivity" />
-        <activity android:name=".app.activity.StartingActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".app.activity.AddWordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".app.activity.StartingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.activity.WordListActivity" />
+        <activity android:name=".app.activity.WordListActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="AA_MODELS"
@@ -38,15 +42,20 @@
             android:name="AA_DB_VERSION"
             android:value="3" />
 
-        <activity android:name=".app.activity.ExportImportActivity" />
+        <activity android:name=".app.activity.ExportImportActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".app.activity.DomainActivity"
-            android:label="Domains" />
+            android:label="Domains"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".app.activity.AddDomainActivity"
-            android:label="Create/Edit Domain" />
-        <activity android:name=".app.activity.ExamActivity" />
-        <activity android:name=".app.activity.ResultActivity"></activity>
+            android:label="Create/Edit Domain"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".app.activity.ExamActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".app.activity.ResultActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

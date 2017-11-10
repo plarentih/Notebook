@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.model.Question;
 import com.enterprise.lu.uni.notebook.app.tools.QuestionsGenerator;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +39,7 @@ public class ExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
         InitializeWidgets();
+        UIHelper.slideBackButton(this);
         questionList = QuestionsGenerator.getAllQuestions();
         currentQuestion = questionList.get(questionId);
         setQuestionView();

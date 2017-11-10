@@ -34,7 +34,7 @@ public class DomainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_domain);
         initializeWidgets();
-
+        UIHelper.slideBackButton(this);
         getDomainNames();
 
         arrayAdapter = new ArrayAdapter<String>(this,

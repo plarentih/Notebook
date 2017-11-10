@@ -19,6 +19,7 @@ import com.enterprise.lu.uni.notebook.app.model.NewWord;
 import com.enterprise.lu.uni.notebook.app.tools.CSVWriter;
 import com.enterprise.lu.uni.notebook.app.tools.DBHelper;
 import com.enterprise.lu.uni.notebook.app.tools.PermissionHelper;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -36,6 +37,7 @@ public class ExportImportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_import);
+        UIHelper.slideBackButton(this);
 
         Button exportButton = (Button) findViewById(R.id.buttonExport);
         Button importButton = (Button) findViewById(R.id.buttonImport);
@@ -56,7 +58,7 @@ public class ExportImportActivity extends AppCompatActivity {
                         exportDir.mkdirs();
                     }
 
-                    File file = new File(exportDir, "csvname.csv");
+                    File file = new File(exportDir, "notebook.csv");
                     try
                     {
                         DBHelper mHelper= new DBHelper(getApplicationContext());
@@ -65,12 +67,14 @@ public class ExportImportActivity extends AppCompatActivity {
                         mHelper.openDataBase();
                         CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 
-                        Cursor curCSV = myDataBase.rawQuery("SELECT Word, translatedWord, Domainthi FROM NewWord",null);
+                        Cursor curCSV = myDataBase.rawQuery("SELECT Word, translatedWord, Domain.Name as DomainName " +
+                                "FROM NewWord,Domain where NewWord.id=Domain.id",null);
                         csvWrite.writeNext(curCSV.getColumnNames());
                         while(curCSV.moveToNext())
                         {
                             //Which column you want to export
-                            String arrStr[] ={curCSV.getString(0), curCSV.getString(1),curCSV.getString(2)};
+                            String arrStr[] ={curCSV.getString(0), curCSV.getString(1),
+                                    curCSV.getString(2)};
                             csvWrite.writeNext(arrStr);
                         }
                         csvWrite.close();
@@ -96,7 +100,7 @@ public class ExportImportActivity extends AppCompatActivity {
                 if (PermissionHelper.checkForPermissions(ExportImportActivity.this)) {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("text/*");
+                    intent.setType("text/csv");
                     startActivityForResult(Intent.createChooser(intent, "Select file"), 40);
                 }
                else{
@@ -159,32 +163,10 @@ public class ExportImportActivity extends AppCompatActivity {
         }
     }
 
-    private void readCSVFile(File file) throws FileNotFoundException {
-        CSVReader csvReader = new CSVReader(new FileReader(file));
-        String[] nextLine;
-        try {
-            while ((nextLine = csvReader.readNext()) != null) {
-                NewWord newWord = new NewWord();
-                newWord.word = nextLine[0];
-                newWord.translation = nextLine[1];
-                String domain = nextLine[2];
-                if(getDomainFromName(domain) == null){
-                    Domain newDomain = new Domain();
-                    newDomain.domainName = domain;
-                    newDomain.save();
-                }
-                newWord.save();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Domain getDomainFromName(String domainName) {
         return new Select()
                 .from(Domain.class)
                 .where("Name = ?", domainName)
                 .executeSingle();
     }
-
 }

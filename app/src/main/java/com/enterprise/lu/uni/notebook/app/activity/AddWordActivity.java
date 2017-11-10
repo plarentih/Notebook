@@ -1,7 +1,11 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.renderscript.Sampler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,16 +15,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.app.model.Domain;
 import com.enterprise.lu.uni.notebook.app.model.NewWord;
 import com.enterprise.lu.uni.notebook.R;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrInterface;
+import com.r0adkll.slidr.model.SlidrListener;
+import com.r0adkll.slidr.model.SlidrPosition;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class AddWordActivity extends AppCompatActivity {
 
@@ -41,6 +54,8 @@ public class AddWordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word);
         InitializeWidgets();
+
+        UIHelper.slideBackButton(this);
 
         setTitle("Add a new word");
 
@@ -69,25 +84,31 @@ public class AddWordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Editable editWord = entryNewWord.getText();
-                if(wordToEdit != null){
-                    NewWord newWord = NewWord.load(NewWord.class, wordToEditId);
-                    newWord.word = editWord.toString();
-                    newWord.translation = entryTranslate.getText().toString();
-                    String domainName = domainSpinner.getSelectedItem().toString();
-                    newWord.domain = getDomainFromName(domainName);
-                    newWord.save();
-                    setResult(RESULT_OK);
-                    finish();
+                String field = editWord.toString().trim();
+                if(TextUtils.isEmpty(field)){
+                    Toast.makeText(getBaseContext(), "You can not leave new word field empty!", Toast.LENGTH_SHORT).show();
+                }else {
+                    if(wordToEdit != null){
+                        NewWord newWord = NewWord.load(NewWord.class, wordToEditId);
+                        newWord.word = editWord.toString();
+                        newWord.translation = entryTranslate.getText().toString();
+                        String domainName = domainSpinner.getSelectedItem().toString();
+                        newWord.domain = getDomainFromName(domainName);
+                        newWord.save();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                    if(wordToEdit == null){
+                        String word = entryNewWord.getText().toString();
+                        String translation = entryTranslate.getText().toString();
+                        String domainName = domainSpinner.getSelectedItem().toString();
+                        Domain domain = getDomainFromName(domainName);
+                        saveWord(word,translation, domain);
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 }
-                if(wordToEdit == null){
-                    String word = entryNewWord.getText().toString();
-                    String translation = entryTranslate.getText().toString();
-                    String domainName = domainSpinner.getSelectedItem().toString();
-                    Domain domain = getDomainFromName(domainName);
-                    saveWord(word,translation, domain);
-                    setResult(RESULT_OK);
-                    finish();
-                }
+
             }
         });
     }

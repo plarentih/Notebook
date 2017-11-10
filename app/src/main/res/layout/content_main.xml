@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/background_material_lighti"
     tools:context="com.enterprise.lu.uni.notebook.app.activity.NotebookActivity"
     tools:showIn="@layout/activity_main">
 
@@ -16,10 +17,8 @@
         android:textAlignment="gravity"
         android:columnWidth="70dp"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="4"
+        android:numColumns="5"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="10dp" />
+        android:stretchMode="columnWidth" />
 </RelativeLayout>

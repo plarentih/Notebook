@@ -1,9 +1,12 @@
 package com.enterprise.lu.uni.notebook.app.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.activeandroid.query.Select;
@@ -33,6 +36,9 @@ public class StartingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting);
         InitializeWidgets();
+
+        View root = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+        root.setBackgroundColor(Color.parseColor("#fffafafa"));
 
         dms = new ArrayList<Domain>();
         dms = (ArrayList<Domain>) getAllDomains();
@@ -64,9 +70,9 @@ public class StartingActivity extends AppCompatActivity {
         examModeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getAllWords().size() < 10){
+                if(getAllWords().size() < 20){
                     UIHelper.showDialog(StartingActivity.this, "Attention!", "You can not take an exam if there are " +
-                                    "less then 10 words in the notebook.", "OK", null);
+                                    "less then 20 words in the notebook.", "OK", null);
                 }else {
                     Intent intent = new Intent(getBaseContext(), ExamActivity.class);
                     startActivity(intent);

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_material_lighti"
     tools:context="com.enterprise.lu.uni.notebook.app.activity.NotebookActivity">
 
     <android.support.design.widget.AppBarLayout

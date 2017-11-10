@@ -7,6 +7,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.enterprise.lu.uni.notebook.R;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
 
 import org.w3c.dom.Text;
 
@@ -21,6 +22,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         initializeWidgets();
+        UIHelper.slideBackButton(this);
         ratingBar.setNumStars(5);
         ratingBar.setStepSize(0.5f);
         score = getIntent().getIntExtra("SCORE", -1);

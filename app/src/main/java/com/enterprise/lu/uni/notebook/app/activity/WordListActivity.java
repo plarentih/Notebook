@@ -23,6 +23,7 @@ import com.activeandroid.query.Select;
 import com.enterprise.lu.uni.notebook.app.adapter.NewWordAdapter;
 import com.enterprise.lu.uni.notebook.app.model.NewWord;
 import com.enterprise.lu.uni.notebook.R;
+import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class WordListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_list);
         initializeWidgets();
+        UIHelper.slideBackButton(this);
         setHeaderActivity();
 
         if(notebookLetter == null){
