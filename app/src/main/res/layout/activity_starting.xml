@@ -11,110 +11,104 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
-    <info.hoang8f.widget.FButton
+    <Button
         android:id="@+id/buttonNewWord"
-        android:layout_width="165dp"
+        android:layout_width="160dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
         android:text="New Word"
-        android:textColor="@color/background_material_lighti"
+        android:textSize="18sp"
         android:textAllCaps="false"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:textColor="@color/background_material_lighti"
+        android:background="@drawable/buttoncolor"
         app:layout_constraintBottom_toTopOf="@+id/buttonNotebook"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1" />
 
-    <info.hoang8f.widget.FButton
+    <Button
         android:id="@+id/buttonNotebook"
-        android:layout_width="171dp"
+        android:layout_width="160dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
         android:text="Notebook"
-        android:textColor="@color/background_material_lighti"
+        android:textSize="18sp"
         android:textAllCaps="false"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:textColor="@color/background_material_lighti"
         app:layout_constraintBottom_toTopOf="@+id/buttonDomains"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/buttonDomains"
-        android:layout_width="166dp"
-        android:layout_height="48dp"
-        android:text="Domains"
-        android:textColor="@color/background_material_lighti"
-        android:textAllCaps="false"
-        tools:layout_constraintRight_creator="1"
+        android:background="@drawable/buttoncolor"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonExam"
-        app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="11dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/buttonDomains"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
+        android:text="Domains"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textColor="@color/background_material_lighti"
+        app:layout_constraintBottom_toTopOf="@+id/buttonExam"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/buttoncolor"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="179dp"
-        android:layout_height="0dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="31dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="17dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="185dp"
         android:layout_height="38dp"
+        android:layout_marginBottom="203dp"
+        android:layout_marginTop="204dp"
         android:text="Notebook"
         android:textAlignment="center"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonDomains"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="204dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="203dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/buttonExam"
-        android:layout_width="167dp"
-        android:layout_height="48dp"
-        android:text="Exam Mode"
-        android:textColor="@color/background_material_lighti"
-        android:textAllCaps="false"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="7dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
-    <info.hoang8f.widget.FButton
-        android:id="@+id/buttonExport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Export/Import"
+    <Button
+        android:id="@+id/buttonExam"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:text="Exam Mode"
+        android:textSize="18sp"
+        android:textAllCaps="false"
         android:textColor="@color/background_material_lighti"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/buttoncolor"
+        tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/buttonNewWord"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        android:layout_marginLeft="-218dp" />
+        tools:layout_constraintRight_creator="1" />
+
 </android.support.constraint.ConstraintLayout>

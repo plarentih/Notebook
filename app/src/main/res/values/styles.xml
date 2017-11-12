@@ -3,11 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/fbutton_color_carrot</item>
-        <item name="colorPrimaryDark">@color/fbutton_color_pumpkin</item>
+        <item name="colorPrimary">@color/fbutton_color_concrete</item>
+        <item name="colorPrimaryDark">@color/fbutton_color_asbestos</item>
         <item name="colorAccent">@color/fbutton_color_midnight_blue</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="buttonColor">@color/fbutton_color_asbestos</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

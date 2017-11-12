@@ -68,7 +68,7 @@ public class AddWordActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, domainNames);
+                this, R.layout.spinner_item, domainNames);
         domainSpinner.setAdapter(adapter);
 
         wordToEdit = (NewWord) getIntent().getSerializableExtra("EDIT_WORD");

@@ -32,6 +32,7 @@ public class ResultActivity extends AppCompatActivity {
         switch(score){
             case 0:
                 textViewResult.setText("At least read your notes before taking a test.");
+                break;
             case 1:
                 textViewResult.setText("Try to study before taking a test.");
                 break;

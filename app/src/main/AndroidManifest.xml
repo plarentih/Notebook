@@ -17,11 +17,13 @@
         <activity
             android:name=".app.activity.NotebookActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".app.activity.AddWordActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".app.activity.StartingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".app.activity.AddWordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.activity.StartingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.activity.WordListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.activity.WordListActivity"
+            android:label="Notebook"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="AA_MODELS"
@@ -42,19 +46,28 @@
             android:name="AA_DB_VERSION"
             android:value="3" />
 
-        <activity android:name=".app.activity.ExportImportActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.activity.ExportImportActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.activity.DomainActivity"
             android:label="Domains"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.activity.AddDomainActivity"
             android:label="Create/Edit Domain"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".app.activity.ExamActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".app.activity.ResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.activity.ExamActivity"
+            android:label="Exam"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.activity.ResultActivity"
+            android:label="Result of Exam"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.activity.RulesActivity"
+            android:label="Rules of Exam"
             android:screenOrientation="portrait"/>
     </application>
 

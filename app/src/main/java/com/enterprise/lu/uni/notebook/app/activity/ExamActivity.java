@@ -2,7 +2,6 @@ package com.enterprise.lu.uni.notebook.app.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +9,11 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.enterprise.lu.uni.notebook.R;
 import com.enterprise.lu.uni.notebook.app.model.Question;
 import com.enterprise.lu.uni.notebook.app.tools.QuestionsGenerator;
 import com.enterprise.lu.uni.notebook.app.tools.UIHelper;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -43,6 +39,10 @@ public class ExamActivity extends AppCompatActivity {
         questionList = QuestionsGenerator.getAllQuestions();
         currentQuestion = questionList.get(questionId);
         setQuestionView();
+
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioAnswer = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+
         textAnswer.setVisibility(View.GONE);
         nextQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,13 +50,9 @@ public class ExamActivity extends AppCompatActivity {
                 textAnswer.setVisibility(View.GONE);
                 radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
                 radioAnswer = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+                makeChoicesClickable();
                 if(currentQuestion.getAnswer().equals(radioAnswer.getText())){
                     score++;
-                    textAnswer.setText("Correct!");
-                    textAnswer.setTextColor(Color.GREEN);
-                }else {
-                    textAnswer.setText("Wrong!");
-                    textAnswer.setTextColor(Color.RED);
                 }
                 if(questionNo == 5){
                     nextQuestionButton.setText("Finish Exam");
@@ -87,6 +83,7 @@ public class ExamActivity extends AppCompatActivity {
                     textAnswer.setText("Wrong!");
                     textAnswer.setTextColor(Color.RED);
                 }
+                makeChoicesNotClickable();
             }
         });
     }
@@ -112,5 +109,19 @@ public class ExamActivity extends AppCompatActivity {
         radioButtonD.setText(currentQuestion.getOptionD());
         questionId++;
         questionNo++;
+    }
+
+    private void makeChoicesNotClickable(){
+        radioButtonA.setClickable(false);
+        radioButtonB.setClickable(false);
+        radioButtonC.setClickable(false);
+        radioButtonD.setClickable(false);
+    }
+
+    private void makeChoicesClickable(){
+        radioButtonA.setClickable(true);
+        radioButtonB.setClickable(true);
+        radioButtonC.setClickable(true);
+        radioButtonD.setClickable(true);
     }
 }

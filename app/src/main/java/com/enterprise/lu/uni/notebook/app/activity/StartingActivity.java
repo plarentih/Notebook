@@ -74,17 +74,9 @@ public class StartingActivity extends AppCompatActivity {
                     UIHelper.showDialog(StartingActivity.this, "Attention!", "You can not take an exam if there are " +
                                     "less then 20 words in the notebook.", "OK", null);
                 }else {
-                    Intent intent = new Intent(getBaseContext(), ExamActivity.class);
+                    Intent intent = new Intent(getBaseContext(), RulesActivity.class);
                     startActivity(intent);
                 }
-            }
-        });
-        exportBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ExportImportActivity.class);
-                startActivity(intent);
             }
         });
     }
