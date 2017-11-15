@@ -14,7 +14,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textColor="#fff"
-        android:textSize="68sp"
+        android:textSize="66sp"
         android:textStyle="bold|italic"
         tools:ignore="UnusedAttribute"
         tools:text="A"/>

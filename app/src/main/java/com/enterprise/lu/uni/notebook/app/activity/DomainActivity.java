@@ -57,7 +57,7 @@ public class DomainActivity extends AppCompatActivity {
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(DomainActivity.this);
                 builder.setTitle("Edit/Delete");
-                builder.setMessage("Do you want to edit or delete this word?");
+                builder.setMessage("Do you want to edit or delete this domain?");
                 builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

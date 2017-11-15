@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".app.activity.NotebookActivity"
-            android:label="@string/app_name"
+            android:label="Notebook"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -46,9 +46,6 @@
             android:name="AA_DB_VERSION"
             android:value="3" />
 
-        <activity
-            android:name=".app.activity.ExportImportActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".app.activity.DomainActivity"
             android:label="Domains"
