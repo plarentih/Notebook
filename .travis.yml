@@ -1,18 +1,4 @@
-language: android
-sudo: false
-
-android:
-  components:
-    # Update Android SDK Tools
-    - tools
-
-    - build-tools-26.0.2
-    - android-25
-
-    # Support library
-    - extra-android-support
-    - extra-android-m2repository
-
+language: java
 jdk:
   - oraclejdk8
 
@@ -21,5 +7,5 @@ sudo: required
 before_install:
  - chmod +x gradlew
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -t token
+script:
+  - ./gradlew clean build -i --continue
